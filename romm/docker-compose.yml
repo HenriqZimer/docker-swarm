@@ -4,7 +4,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     environment:
-      - MARIADB_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+      - MARIADB_ROOT_PASSWORD_FILE=/run/secrets/db_password
       - MARIADB_DATABASE=romm
       - MARIADB_USER=romm-user
       - MARIADB_PASSWORD_FILE=/run/secrets/db_password
@@ -49,7 +49,6 @@ services:
           memory: 512M
     secrets:
       - db_password
-      - db_root_password
 
   app:
     image: rommapp/romm:latest
@@ -70,7 +69,6 @@ services:
       - HASHEOUS_API_ENABLED=true
       - IGDB_CLIENT_ID_FILE=/run/secrets/igdb_client_id
       - IGDB_CLIENT_SECRET_FILE=/run/secrets/igdb_client_secret
-      - STEAMGRIDDB_API_KEY_FILE=/run/secrets/steamgriddb_api_key
       - RETROACHIEVEMENTS_API_KEY_FILE=/run/secrets/retroachievements_api_key
     networks:
       - retro-network
@@ -124,7 +122,6 @@ services:
       - auth_secret_key
       - igdb_client_id
       - igdb_client_secret
-      - steamgriddb_api_key
       - retroachievements_api_key
 
 volumes:
@@ -183,15 +180,11 @@ secrets:
     file: ./romm_base_url.txt
   db_password:
     file: ./romm_db_password.txt
-  db_root_password:
-    file: ./romm_db_root_password.txt
   auth_secret_key:
     file: ./romm_auth_secret_key.txt
   igdb_client_id:
     file: ./romm_igdb_client_id.txt
   igdb_client_secret:
     file: ./romm_igdb_client_secret.txt
-  steamgriddb_api_key:
-    file: ./romm_steamgriddb_api_key.txt
   retroachievements_api_key:
     file: ./romm_retroachievements_api_key.txt
